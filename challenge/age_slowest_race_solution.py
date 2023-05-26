@@ -5,10 +5,12 @@
 import re
 import datetime
 
+
 def get_data():
     with open('10k_racetimes.txt', 'rt') as file:
         content = file.read()
     return content
+
 
 def get_event_time(line):
     """Given a line with Jennifer Rhines' race times from 10k_racetimes.txt, 
@@ -20,7 +22,7 @@ def get_event_time(line):
 
     def get_age(race_dob):
         race, dob = race_dob
-        race, dob = get_date(race), get_date(dob)  
+        race, dob = get_date(race), get_date(dob)
         return divmod((race - dob).days, 365.25)
 
     def get_race_times(line):
@@ -31,15 +33,15 @@ def get_event_time(line):
     age = get_age(event_dob)
     return (age, time)
 
-    
+
 def get_age_slowest_times():
     '''Return a tuple (age, race_time) where:
        age: AyBd is in this format where A and B are integers'''
     races = get_data()
     race_age = []
     for line in races.splitlines():
-       if 'Jennifer Rhines' in line:
-          race_age.append(get_event_time(line))
+        if 'Jennifer Rhines' in line:
+            race_age.append(get_event_time(line))
     slowest_race = max(race_age, key=lambda x: x[1])
     slowest_age, slowest_race_time = slowest_race
 
@@ -47,4 +49,4 @@ def get_age_slowest_times():
         years, days = age
         return f'{int(years)}y{int(days)}d'
 
-    return (format_date(slowest_age), slowest_race_time)    
+    return (format_date(slowest_age), slowest_race_time)
